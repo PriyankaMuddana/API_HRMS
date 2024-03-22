@@ -3,9 +3,9 @@ class Api::V1::EmployeesController < ApplicationController
 
   def index
     @employees = Employee.all
-    render_failure_response(["No employee data present"]) and return  if @employees.empty?
+    render_failure_response(["Employee data is not present"]) and return  if @employees.empty?
 
-    render_success_response(array_json(@employees, EmployeeSerializer), ['employees loaded successfully.'], [])
+    render_success_response(array_json(@employees, EmployeeSerializer), ['successfully loaded employees.'], [])
   end
 
   def create
@@ -21,7 +21,7 @@ class Api::V1::EmployeesController < ApplicationController
     if employee.present?
       render_success_response(ActiveModelSerializers::SerializableResource.new(employee, serializer: EmployeeSerializer), [], [])
     else
-      render_failure_response(["Unable to find the employee with given details"])
+      render_failure_response(["Unable to find the employee with provided data"])
     end
   end
 
